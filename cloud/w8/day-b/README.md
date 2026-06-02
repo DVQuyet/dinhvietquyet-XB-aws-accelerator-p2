@@ -1,8 +1,58 @@
 # W8-D2 Kubernetes Foundation
 
-## Topics
+- Kubernetes is a container orchestration platform used to deploy, run, scale, update, and manage containerized applications.
 
-Today I studied the foundation of containers and Kubernetes.
+- In Kubernetes, applications are not managed directly as single containers. Instead, Kubernetes manages objects such as Pods, Deployments, Services, ConfigMaps, Secrets, and NetworkPolicies.
+
+- A Pod is the smallest deployable unit in Kubernetes. A Pod usually contains one application container, but it can also contain multiple containers that need to work together.
+
+- Pods are temporary resources. They can be deleted, recreated, or moved to another node. Because of this, applications should not depend directly on a specific Pod IP address.
+
+- A Deployment is commonly used to manage Pods. It helps keep the desired number of Pods running and can recreate Pods automatically when they fail.
+
+- A Service provides a stable network endpoint for accessing a group of Pods. Since Pod IPs can change, clients should connect to a Service instead of connecting directly to Pods.
+
+- Service uses selectors to find the correct Pods. For example, a Service can target all Pods with a specific label such as `app: backend`.
+
+- Common Service types include:
+  - `ClusterIP`: exposes the Service only inside the cluster.
+  - `NodePort`: exposes the Service on a static port of each node.
+  - `LoadBalancer`: exposes the Service externally through a cloud load balancer.
+  - `ExternalName`: maps the Service to an external DNS name.
+
+- A ConfigMap is used to store non-sensitive configuration data as key-value pairs.
+
+- ConfigMaps help separate application configuration from container images. For example, values such as `APP_ENV`, `LOG_LEVEL`, or `DATABASE_HOST` can be stored in a ConfigMap.
+
+- Pods can use ConfigMaps as environment variables or as configuration files mounted into the container.
+
+- A Secret is used to store sensitive data such as passwords, tokens, private keys, and TLS certificates.
+
+- Secrets are similar to ConfigMaps, but they are intended for confidential data. Sensitive values should not be hard-coded in application code or container images.
+
+- Secrets can also be used by Pods as environment variables or mounted files. However, Secrets are not fully secure by default, so production environments should use RBAC and encryption at rest.
+
+- A NetworkPolicy is used to control network traffic between Pods and between Pods and external systems.
+
+- NetworkPolicy works like a firewall rule for Kubernetes workloads. It can define which Pods are allowed to communicate with each other and through which ports.
+
+- Ingress means traffic entering a Pod.
+
+- Egress means traffic leaving a Pod.
+
+- By default, if no NetworkPolicy exists, Pods can usually communicate freely inside the namespace. When NetworkPolicies are applied, only explicitly allowed traffic is permitted.
+
+- NetworkPolicy requires a network plugin that supports policy enforcement. If the cluster network plugin does not support NetworkPolicy, creating a NetworkPolicy resource will not have any effect.
+
+- Today I also verified the local Kubernetes environment using Docker Desktop, kubectl, and minikube.
+
+- The local Kubernetes cluster was started successfully with minikube using the Docker driver.
+
+- `kubectl get nodes` showed that the minikube node was in `Ready` status.
+
+- `kubectl get pods -A` showed that the Kubernetes system Pods were running successfully.
+
+- Main takeaway: Kubernetes runs applications inside Pods, exposes them through Services, manages configuration with ConfigMaps and Secrets, and controls communication using NetworkPolicies.
 
 ## Tools installed and verified
 
